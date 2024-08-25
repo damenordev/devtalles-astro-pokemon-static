@@ -1,0 +1,49 @@
+---
+import { siteInfo } from '@/constants'
+import { ViewTransitions } from 'astro:transitions'
+
+interface Props {
+	title?: string
+	image?: string
+	description?: string
+}
+
+const {
+	image,
+	title = siteInfo.title,
+	description = siteInfo.description
+} = Astro.props
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+
+		<!-- SEO -->
+		<meta name="description" content={description} />
+		<meta name="author" content="damenor" />
+
+		<!-- OG Metatags -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={image} />
+		<meta property="og:url" content={Astro.url} />
+
+		<!-- Twitter Metatags -->
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={image} />
+
+		<ViewTransitions />
+	</head>
+	<body class="bg-neutral-950 text-neutral-50">
+		<slot />
+		<footer class="bg-neutral-950 text-neutral-50 p-4">
+			<p class="text-xs text-center text-neutral-600">Desarrollado por <a class="text-neutral-400" href="https://www.damenor.com/" target="_blank">damenor</a> © {new Date().getFullYear()}. Todos los derechos reservados.</p>
+		</footer>
+	</body>
+</html>

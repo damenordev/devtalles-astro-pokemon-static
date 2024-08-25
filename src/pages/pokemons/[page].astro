@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from "astro"
+
+import { PokemonCard } from "@/components"
+import { type IPokemonListResponse } from "@/types"
+import { LayoutBase } from "@/layouts"
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+  const { results } = await response.json() as IPokemonListResponse
+  
+  return paginate(results, { pageSize: 20 })
+}) satisfies GetStaticPaths;
+
+const title = 'Pokemon Static | Home'
+const { page } = Astro.props
+
+---
+
+<LayoutBase title={title}>
+  <header class="sticky -top-20 left-0 pb-8 pt-24 z-10 backdrop-blur-3xl">
+    <h2 class="text-center text-5xl text-lime-400">Listado de pokemons</h2>
+  </header>
+
+  <main aria-label="Listado de pokemons" class="container mx-auto p-4">
+    <section 
+      class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 "
+    >
+      {page.data.map(pokemon => <PokemonCard {...pokemon} />)}
+    </section>
+    <section class="flex items-center justify-between gap-2 px-4 mt-6">
+      <div class="flex items-center gap-2">
+        <a 
+          href={page.url.prev} 
+          class:list={['text-sm text-neutral-950 pb-1 px-3 rounded-3xl ', {
+            'bg-neutral-700 cursor-not-allowed hover:bg-neutral-700': !page.url.prev,
+            'bg-lime-400 cursor-pointer hover:bg-lime-500': page.url.prev
+          }]}
+        >
+          Anteriores
+        </a>
+        <a href={page.url.next} class:list={['text-sm text-neutral-950 pb-1 px-3 rounded-3xl ', {
+          'bg-neutral-700 cursor-not-allowed hover:bg-neutral-700': !page.url.next,
+          'bg-lime-400 cursor-pointer hover:bg-lime-500': page.url.next
+        }]}>Siguientes</a>
+      </div>
+      <span class="text-lime-400">Página {page.currentPage}</span>
+    </section>
+  </main>
+</LayoutBase>
