@@ -2,15 +2,14 @@
 import type { GetStaticPaths } from "astro"
 
 import { PokemonCard } from "@/components"
-import { type IPokemonListResponse } from "@/types"
+import { getPokemons } from '@/services'
 import { LayoutBase } from "@/layouts"
+import PokemonList from "@/components/PokemonList.astro"
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-  const { results } = await response.json() as IPokemonListResponse
-  
-  return paginate(results, { pageSize: 20 })
-}) satisfies GetStaticPaths;
+  const pokemons = await getPokemons()
+  return paginate(pokemons, { pageSize: 20 })
+}) satisfies GetStaticPaths
 
 const title = 'Pokemon Static | Home'
 const { page } = Astro.props
@@ -18,33 +17,31 @@ const { page } = Astro.props
 ---
 
 <LayoutBase title={title}>
-  <header class="sticky -top-20 left-0 pb-8 pt-24 z-10 backdrop-blur-3xl">
-    <h2 class="text-center text-5xl text-lime-400">Listado de pokemons</h2>
+  <header class="sticky -top-8 left-0 flex items-center justify-between px-8 pb-4 pt-12 z-10 backdrop-blur-3xl">
+    <div class="flex-1 flex items-center gap-2">
+      <a 
+        href={page.url.prev} 
+        class:list={['text-sm text-neutral-950 pb-1 px-3 rounded-3xl ', {
+          'bg-neutral-700 cursor-not-allowed hover:bg-neutral-700': !page.url.prev,
+          'bg-lime-400 cursor-pointer hover:bg-lime-500': page.url.prev
+        }]}
+      >
+        Anteriores
+      </a>
+      <a href={page.url.next} class:list={['text-sm text-neutral-950 pb-1 px-3 rounded-3xl ', {
+        'bg-neutral-700 cursor-not-allowed hover:bg-neutral-700': !page.url.next,
+        'bg-lime-400 cursor-pointer hover:bg-lime-500': page.url.next
+      }]}>Siguientes</a>
+    </div>
+    <div class="">
+      <h2 class="text-center text-2xl text-lime-400">Listado de pokemons</h2>
+    </div>
+    <div class="flex-1 flex justify-end">
+      <span class="text-lime-400">Página {page.currentPage}</span>
+    </div>
   </header>
 
-  <main aria-label="Listado de pokemons" class="container mx-auto p-4">
-    <section 
-      class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 "
-    >
-      {page.data.map(pokemon => <PokemonCard {...pokemon} />)}
-    </section>
-    <section class="flex items-center justify-between gap-2 px-4 mt-6">
-      <div class="flex items-center gap-2">
-        <a 
-          href={page.url.prev} 
-          class:list={['text-sm text-neutral-950 pb-1 px-3 rounded-3xl ', {
-            'bg-neutral-700 cursor-not-allowed hover:bg-neutral-700': !page.url.prev,
-            'bg-lime-400 cursor-pointer hover:bg-lime-500': page.url.prev
-          }]}
-        >
-          Anteriores
-        </a>
-        <a href={page.url.next} class:list={['text-sm text-neutral-950 pb-1 px-3 rounded-3xl ', {
-          'bg-neutral-700 cursor-not-allowed hover:bg-neutral-700': !page.url.next,
-          'bg-lime-400 cursor-pointer hover:bg-lime-500': page.url.next
-        }]}>Siguientes</a>
-      </div>
-      <span class="text-lime-400">Página {page.currentPage}</span>
-    </section>
+  <main class="relative container mx-auto p-4 pt-12">
+    <PokemonList data={page.data} />
   </main>
 </LayoutBase>

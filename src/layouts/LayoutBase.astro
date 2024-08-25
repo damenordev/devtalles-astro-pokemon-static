@@ -1,6 +1,7 @@
 ---
-import { siteInfo } from '@/constants'
 import { ViewTransitions } from 'astro:transitions'
+
+import { siteInfo } from '@/constants'
 
 interface Props {
 	title?: string
@@ -39,6 +40,12 @@ const {
 		<meta name="twitter:image" content={image} />
 
 		<ViewTransitions />
+
+		<!-- <style>
+			@view-transition {
+				navigation: auto; /* enabled! */
+			}
+		</style> -->
 	</head>
 	<body class="bg-neutral-950 text-neutral-50">
 		<slot />

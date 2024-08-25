@@ -1,0 +1,38 @@
+---
+const { audioSrc } = Astro.props
+---
+
+<audio src={audioSrc}>
+  <source src={audioSrc} type="audio/ogg" />
+</audio>
+<button class="button-pulse rounded-full p-1 transition-all active:scale-95 hover:scale-110">
+  <svg width="40" height="40" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="bi bi-play-fill fill-neutral-950 pl-1">
+    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+  </svg>
+</button>
+
+<script>
+
+  const button = document.querySelector('button')
+  const audio = document.querySelector('audio')
+
+  if(audio) audio.volume = 0.25
+
+  button?.addEventListener('click', () => audio?.play())
+
+</script>
+
+<style>
+
+  .button-pulse {
+    background: linear-gradient(30deg, rgb(255, 130, 0) 20%, rgb(255, 38, 0) 80%);
+    box-shadow: rgba(76, 96, 97, 0.698) 0px 0px 0px 0px;
+    animation: 1.5s cubic-bezier(0.8, 0, 0, 1) 0s infinite normal none running pulse;
+  }
+
+  @keyframes pulse {
+    100% {
+      box-shadow: 0 0 0 24px transparent;
+    }
+  }
+</style>
