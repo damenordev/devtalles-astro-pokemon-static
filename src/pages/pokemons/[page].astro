@@ -1,10 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro'
 
-import { PokemonCard } from '@/components'
+import { PokemonList } from '@/components'
 import { getPokemons } from '@/services'
 import { LayoutBase } from '@/layouts'
-import PokemonList from '@/components/PokemonList.astro'
 
 export const getStaticPaths = (async ({ paginate }) => {
   const pokemons = await getPokemons()

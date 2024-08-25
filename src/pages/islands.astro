@@ -1,9 +1,8 @@
 ---
 import { CounterSolid } from '@/components/CounterSolid'
-import { PokemonListFavorites } from '@/components/pokemon/PokemonListFavorites'
 import { LayoutBase } from '@/layouts'
 
-const title = `Pokemon Static | Favoritos`
+const title = `Pokemon Static | Islands`
 ---
 
 <LayoutBase title={title}>
@@ -16,9 +15,8 @@ const title = `Pokemon Static | Favoritos`
         />
       </video>
     </div>
-    <CounterSolid transition:persist="counter-solid" transition:persist-props client:load>
+    <CounterSolid transition:persist="counter-solid" transition:persist-props initialValue={20} client:load>
       <h2 class="text-7xl text-center">Counter</h2>
     </CounterSolid>
-    <PokemonListFavorites client:only="solid-js" />
   </main>
 </LayoutBase>

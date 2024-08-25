@@ -1,9 +1,9 @@
 ---
 const navLinks = [
   { title: 'Inicio', url: '/' },
-  { title: 'Listado', url: '/pokemons/1/' },
-  { title: 'Favoritos', url: '/pokemons/favorites/' },
-  { title: 'Isla', url: '#' },
+  { title: 'Listado', url: '/pokemons/1' },
+  { title: 'Favoritos', url: '/pokemons/favorites' },
+  { title: 'Islas', url: '/islands' },
 ]
 
 const currentPathName = Astro.url.pathname
@@ -28,7 +28,7 @@ const currentPathName = Astro.url.pathname
               'w-full h-full relative z-20',
               {
                 'text-neutral-950': currentPathName === link.url,
-                'text-neutral-400 hover:text-neutral-200': currentPathName !== link.url,
+                'text-neutral-400 hover:text-neutral-200': currentPathName !== link.url || currentPathName !== `${link.url}/`,
               },
             ]}
           >
