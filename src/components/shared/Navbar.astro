@@ -1,0 +1,41 @@
+---
+const navLinks = [
+  { title: 'Inicio', url: '/' },
+  { title: 'Listado', url: '/pokemons/1' },
+  { title: 'Favoritos', url: '/pokemons/favorites' },
+  { title: 'Isla', url: '#' },
+]
+
+const currentPathName = Astro.url.pathname
+---
+
+<nav
+  class="sticky top-4 left-0 z-20 w-fit flex items-center justify-center gap-2 p-3 px-4 mx-auto text-neutral-500 capitalize bg-neutral-900 shadow rounded-full"
+>
+  {
+    navLinks.map(link => {
+      return (
+        <div class="relative px-3 pb-1 pt-0.5 rounded-full">
+          {currentPathName === link.url && (
+            <div
+              transition:name="navbar-selected"
+              class="absolute top-0 left-0 w-full h-full rounded-full bg-lime-400 text-neutral-950 z-10"
+            />
+          )}
+          <a
+            href={link.url}
+            class:list={[
+              'w-full h-full relative z-20',
+              {
+                'text-neutral-950': currentPathName === link.url,
+                'text-neutral-400 hover:text-neutral-200': currentPathName !== link.url,
+              },
+            ]}
+          >
+            {link.title}
+          </a>
+        </div>
+      )
+    })
+  }
+</nav>

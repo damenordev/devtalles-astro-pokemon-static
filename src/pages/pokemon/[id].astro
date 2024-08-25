@@ -1,23 +1,22 @@
 ---
-import { PokemonCard, PokemonPageHeader } from "@/components"
-import { LayoutBase } from "@/layouts"
+import { PokemonCard, PokemonPageHeader } from '@/components'
+import { LayoutBase } from '@/layouts'
 import { getPokemons } from '@/services'
-import { getIdByUrl } from "@/utils"
+import { getIdByUrl } from '@/utils'
 
-export const getStaticPaths = (async () => {
+export const getStaticPaths = async () => {
   const pokemons = await getPokemons()
   return pokemons.map(pokemon => {
     const idByUrl = getIdByUrl(pokemon.url)
-    return ({ params: { id: idByUrl }, props: pokemon })
+    return { params: { id: idByUrl }, props: pokemon }
   })
-})
+}
 
 const { id } = Astro.params
 const { url, name } = Astro.props
 const title = `Pokemon Static | ${name}`
 
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
-
 ---
 
 <LayoutBase title={title}>

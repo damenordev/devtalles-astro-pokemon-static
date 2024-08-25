@@ -1,5 +1,5 @@
 ---
-import PokemonCard from "./PokemonCard.astro"
+import PokemonCard from './PokemonCard.astro'
 
 interface Props {
   data: {
@@ -12,6 +12,6 @@ interface Props {
 const { data } = Astro.props
 ---
 
-<section aria-label="Listado de pokemons" class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 ">
+<section aria-label="Listado de pokemons" class="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6">
   {data.map(pokemon => <PokemonCard {...pokemon} />)}
 </section>

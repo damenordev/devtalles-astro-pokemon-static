@@ -13,16 +13,28 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 
 const href = `/pokemons/${name}`
 // const href = `/pokemon/${id}`
-
 ---
 
-<a 
+<a
   href={href}
-  class={`flex flex-col items-center  ${isBig ? 'py-24 cursor-default touch-none' : 'border border-neutral-700 rounded-3xl p-4 cursor-pointer transition-colors hover:bg-neutral-900 group'}`}
+  class={`flex flex-col items-center  ${isBig ? 'py-24 cursor-default touch-none' : 'border border-neutral-900 rounded-3xl p-4 cursor-pointer transition-colors hover:bg-neutral-900 group'}`}
 >
-  <img transition:name={`${name}-image`} class={`${isBig ? 'max-w-[1024px]' : 'max-w-56 scale-75 contrast-[0.25] grayscale transition-transform group-hover:contrast-100 group-hover:scale-100 group-hover:grayscale-0'}`} src={imageSrc} alt={name} />
-  <h2 class:list={[{
-    'text-2xl text-center font-bold': !isBig,
-    'hidden': isBig
-  }]} transition:name={`${name}-title`}>#{id} {name}</h2>
+  <img
+    transition:name={`${name}-image`}
+    class={`${isBig ? 'max-w-[440px]' : 'max-w-56 scale-75 contrast-[0.75] grayscale transition-transform group-hover:contrast-100 group-hover:scale-100 group-hover:grayscale-0'}`}
+    src={imageSrc}
+    alt={name}
+  />
+  <h2
+    class:list={[
+      {
+        'text-2xl text-center font-bold': !isBig,
+        hidden: isBig,
+      },
+    ]}
+    transition:name={`${name}-title`}
+  >
+    #{id}
+    {name}
+  </h2>
 </a>

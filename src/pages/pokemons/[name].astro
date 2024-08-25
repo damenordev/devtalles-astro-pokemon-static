@@ -1,16 +1,16 @@
 ---
-import type { GetStaticPaths } from "astro"
+import type { GetStaticPaths } from 'astro'
 
-import { PokemonCard, PokemonPageHeader } from "@/components"
-import { LayoutBase } from "@/layouts"
-import type { IPokemonListResponse } from "@/types"
-import { getIdByUrl } from "@/utils"
+import { PokemonCard, PokemonPageHeader } from '@/components'
+import { LayoutBase } from '@/layouts'
+import type { IPokemonListResponse } from '@/types'
+import { getIdByUrl } from '@/utils'
 
-export const getStaticPaths = (async () => {
+export const getStaticPaths = async () => {
   const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-  const { results } = await response.json() as IPokemonListResponse
+  const { results } = (await response.json()) as IPokemonListResponse
   return results.map(pokemon => ({ params: { name: pokemon.name }, props: pokemon }))
-})
+}
 
 const { name } = Astro.params
 const { url } = Astro.props
@@ -29,4 +29,3 @@ const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/
     <PokemonCard name={name} url={url} isBig />
   </main>
 </LayoutBase>
-
